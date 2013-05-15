@@ -66,7 +66,7 @@ Class Browser extends App
 					If value < 0 Then value = 0
 					If value > 1 Then value = 1
 					SetAlpha(value)
-					SetColor(0, 0, 0)
+					SetColor(fadeRed, fadeGreen, fadeBlue)
 					DrawRect(-1, -1, logicalResolution.x + 2, logicalResolution.y + 2)
 					SetColor(255, 255, 255)
 					SetAlpha(1)
@@ -78,7 +78,7 @@ Class Browser extends App
 					If value > 1 Then value = 1
 
 					SetAlpha(value)
-					SetColor(0, 0, 0)
+					SetColor(fadeRed, fadeGreen, fadeBlue)
 					DrawRect(-1, -1, logicalResolution.x + 2, logicalResolution.y + 2)
 					SetColor(255, 255, 255)
 					SetAlpha(1)
@@ -293,11 +293,48 @@ Class Browser extends App
 	Method BlackBarsSize:DrawingPoint()
 		Return barras
 	End
+	
+	Method FadeRed:Int() Property
+		Return fadeRed
+	End
+	
+	Method FadeRed:Void(red:Int) Property
+		#IF CONFIG="debug"
+		If red < 0 or red > 255 Then Error("Fade color out of bounds.")
+		#END
+		fadeRed = red
+	End
+	
+	Method FadeGreen:Int() Property
+		Return fadeGreen
+	End
+	
+	Method FadeGreen:Void(green:Int) Property
+		#IF CONFIG="debug"
+		If green < 0 or green > 255 Then Error("Fade color out of bounds.")
+		#END
+		fadeGreen = green
+	End
+	
+	Method FadeBlue:Int() Property
+		Return fadeBlue
+	End
+	
+	Method FadeBlue:Void(blue:Int) Property
+		#IF CONFIG="debug"
+		If blue < 0 or blue > 255 Then Error("Fade color out of bounds.")
+		#END
+		fadeBlue = blue
+	End
+	
+	
 	Private
 	Field currentScreen:Screen
 	Field browserStatus:Int
 	Field pauseScreen:Screen
 	Field internalStatus:Int = eScreenStatus.EXECUTING
+	
+	Field fadeRed:Int, fadeGreen:Int, fadeBlue:Int
 	
 	'Field hasFaded:Bool = False
 	

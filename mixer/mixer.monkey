@@ -71,6 +71,7 @@ Class Mixer
 		SetChannelVolume(currentChannel, mainVolume * fxVolume * volume)
 		SetChannelRate(currentChannel, pitch)
 		soundVolume[currentChannel] = volume
+		'Print "channel: " + currentChannel
 		PlaySound(sound, currentChannel)
 		currentChannel += 1
 		If currentChannel >= MAXCHANNELS Then currentChannel = 0
@@ -99,7 +100,7 @@ Class Mixer
 	Field musicFader:Float = 1
 	Field currentChannel:Int = 1
 	Field fxVolume:Float = 1
-	Const MAXCHANNELS:Int = 32
+	Const MAXCHANNELS:Int = 31
 	Field soundVolume:Float[] = New Float[MAXCHANNELS]
 	Field running:Bool = False
 End
