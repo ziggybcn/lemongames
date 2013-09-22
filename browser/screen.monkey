@@ -63,7 +63,7 @@ Class Screen Abstract
 	Field nextScreen:Screen
 	Field renderonpause:Bool = True
 	
-	Field loadOnPreviousScreen:Bool = True
+	Field loadOnPreviousScreen:Bool = False
 	
 End
 
