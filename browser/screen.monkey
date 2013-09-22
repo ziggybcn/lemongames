@@ -49,6 +49,14 @@ Class Screen Abstract
 		nextScreen=value
 	End
 
+	Method OnBack()
+		EndApp()
+	End
+	
+	Method OnClose()
+		EndApp()
+	End
+	
 	Field fadeIn:Int = 20
 	Field fadeOut:Int = 30
 	Private

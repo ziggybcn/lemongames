@@ -110,6 +110,14 @@ Class Browser extends App
 	End
 	
 	
+	Method OnBack()
+		CurrentScreen.OnBack()
+	End
+	
+	Method OnClose()
+		CurrentScreen.OnClose()
+	End
+	
 	Method OnUpdate()
 		CalculateScaleFactor()
 		Select fadingStatus
