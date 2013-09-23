@@ -6,8 +6,11 @@ Import fontmachine
 Import imageutils
 Import welcomepage
 Import texturepacker
+#IF CONFIG="debug"
 Import reflection
+#END
 Import mixer
+Import serializer
 
 Class Resources Abstract
 	Global SystemFont:BitmapFont
@@ -34,6 +37,7 @@ End
 
 
 Function DumpClasses()
+#IF CONFIG="debug"
 		For Local cinfo:= EachIn GetClasses()
 			Local exts$
 			If cinfo.SuperClass exts+=" Extends "+cinfo.SuperClass.Name
@@ -57,7 +61,9 @@ Function DumpClasses()
 				DebugLog "  Method "+info.Name+Ret( info.ReturnType )+Args( info.ParameterTypes )+Attribs( info.Attributes() )
 			Next
 		Next
-
+#ELSE
+	'Print "Dump Classes unavailable on release mode."
+#END
 	End
 
 Function Attribs:String(attrs)
