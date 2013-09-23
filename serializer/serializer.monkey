@@ -272,7 +272,7 @@ Class VirtualIndexedFile
 					done = True
 			End
 		Wend
-		Return Int("0" + data[init .. readIndex]) 'In case it is an empty string
+		Return Int("0" + data[init .. readIndex - 1]) 'In case it is an empty string
 	End
 	
 End
