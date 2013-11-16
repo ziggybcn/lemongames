@@ -1,3 +1,6 @@
+#rem monkeydoc Module lemongames
+	This is the lemongames module
+#END
 'This file was edited with Jungle IDE
 Import mojo
 Import browser

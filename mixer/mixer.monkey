@@ -83,7 +83,6 @@ Class Mixer
 		Next
 	End
 	
-	
 	Const MUSIC_LOOP:Int = 1
 	Const MUSIC_ONCE:Int = 0
 	
@@ -104,4 +103,3 @@ Class Mixer
 	Field soundVolume:Float[] = New Float[MAXCHANNELS]
 	Field running:Bool = False
 End
-

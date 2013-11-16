@@ -3,6 +3,7 @@ Private
 Import xmlloader
 Public
 
+
 Class TexturePackerLoader
 	Field images:StringMap<Image>
 
