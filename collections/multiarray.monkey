@@ -4,14 +4,15 @@
 #REM monkeydoc
 	This is a multidimensional array.
 #END
-Class MultiArray<T>
+Class MultiArray<T> Final
 
 	#REM monkeydoc
 		This method allows the multidimensional array to be set to a given dimensions and sizes.
 		Use it like this:
 		myArray.Dim([3,10,7])
 		This will make this array to be of 3 dimensions, being the first one of 3 items, the second one of 10 items, and the last one of 7 items.
-		When a multidimensional array is dimensioned using this method, any previous contents it hast is derefenced.
+		When a multidimensional array is dimensioned using this method, any previous contents it had is derefenced.
+		This method returns the number of items this multidimensional array contains after the Dim operation
 	#END
 	Method Dim(dimensions:Int[]) Final
 		Self.dimensions = dimensions
@@ -21,6 +22,7 @@ Class MultiArray<T>
 		Next
 		data = New T[size]
 		PrecalculateOffsets
+		Return size
 	End
 
 	#REM monkeydoc
@@ -29,6 +31,7 @@ Class MultiArray<T>
 		myArray.ReDim([3,10,7])
 		This will make this array to be of 3 dimensions, being the first one of 3 items, the second one of 10 items, and the last one of 7 items.
 		When a multidimensional array is dimensioned using this method, any previous contents it has is not dereferenced unles it gets out of bounds.
+		This method returns the number of items this multidimensional array contains after the resize
 	#END
 	Method ReDim(dimensions:Int[]) Final
 		Self.dimensions = dimensions
@@ -39,6 +42,7 @@ Class MultiArray<T>
 		Next
 		data = data.Resize(size)
 		PrecalculateOffsets
+		Return size
 	End
 	#REM monkeydoc
 		This method will return the size of the indexed dimension
@@ -85,25 +89,30 @@ Class MultiArray<T>
 		myArray.Set([3,5,8], MyNewValue) 
 		so you the item at (3,5,8) in your 3 dimensional array gets the value MyNewValue.
 	#END
-	Method Set(index:Int[], value:T) Final
+	Method Set:Void(index:Int[], value:T) Final
 		Local val:Int = CalculateIndex(index) 'y * width + x
 		data[val] = value
 	End
 
-	Method Set(offset:Int, value:T)
+	#REM monkeydoc
+		This method will allow you to set a value to an item at a give offset. That's a o(1) operation that does not generate garbage, so it is FAST.
+		It returns the value being set
+	#END
+	Method SetItemByOffset:T(offset:Int, value:T) Final
 		'Local val:Int = CalculateIndex(index) 'y * width + x
 		data[offset] = value
+		Return T
 	End
 
 	#REM monkeydoc
 		This method will return the absolute offset of a item at a given position.
 	#End
-	Method GetOffsetForIndex(index:Int[])
+	Method GetOffsetForIndex(index:Int[]) Final
 		Return CalculateIndex(index)
 	End
 	
 	'Summary:This is internaly used to allow EachIn iterations<br> This generates one object for the garbage collector, use index iteration instead of ForEach when possible.
-	Method ObjectEnumerator:MultiArrayEnumerator<T>()
+	Method ObjectEnumerator:MultiArrayEnumerator<T>() Final
 		Local mae:= New MultiArrayEnumerator<T>
 		mae.InitEnumerator(data)
 		Return mae
@@ -139,15 +148,15 @@ Class MultiArray<T>
 	End
 End
 
-Class MultiArrayEnumerator<T>
-	Method InitEnumerator(data:T[])
+Class MultiArrayEnumerator<T> Final
+	Method InitEnumerator(data:T[]) Final
 		index = 0
 		Self.data = data
 	End
-	Method HasNext:Bool()
+	Method HasNext:Bool() Final
 		Return index < data.Length
 	End
-	Method NextObject:T()
+	Method NextObject:T() Final
 		index += 1
 		Return data[index - 1]
 	End

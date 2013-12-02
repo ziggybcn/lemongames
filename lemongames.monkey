@@ -38,7 +38,6 @@ Function TouchVY:Float(index:Int)
 	Return Browser.LogicalY(TouchY(index))
 End
 
-
 Function DumpClasses()
 #IF CONFIG="debug"
 		For Local cinfo:= EachIn GetClasses()
