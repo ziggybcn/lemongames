@@ -101,7 +101,7 @@ Class MultiArray<T> Final
 	Method SetItemByOffset:T(offset:Int, value:T) Final
 		'Local val:Int = CalculateIndex(index) 'y * width + x
 		data[offset] = value
-		Return T
+		Return value
 	End
 
 	#REM monkeydoc

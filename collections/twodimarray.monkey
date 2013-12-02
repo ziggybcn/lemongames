@@ -65,7 +65,7 @@ Class TwoDimArray<T> Final
 	Method SetItemByOffset:T(offset:Int, value:T) Final
 		'Local val:Int = CalculateIndex(index) 'y * width + x
 		data[offset] = value
-		Return T
+		Return value
 	End
 
 	#rem monkeydoc
@@ -83,7 +83,7 @@ Class TwoDimArray<T> Final
 	Method Set:T(x:Int, y:Int, value:T) Final
 		Local val:Int = y * width + x
 		data[val] = value
-		Return T
+		Return value
 	End
 	
 	'Summary:This is internaly used to allow EachIn iterations<br> This generates one object for the garbage collector, use index iteration instead of ForEach when possible.
