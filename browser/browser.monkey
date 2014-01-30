@@ -29,6 +29,7 @@ Class Browser extends App
 	Method New()
 		CurrentScreen = New InitScreen
 	End
+	Global drawBars:Bool = True
 
 	#REM
 		summary:Returns the integer vector containing the default logical resolution for this browser. 
@@ -67,7 +68,8 @@ Class Browser extends App
 					If value > 1 Then value = 1
 					SetAlpha(value)
 					SetColor(fadeRed, fadeGreen, fadeBlue)
-					DrawRect(-1, -1, logicalResolution.x + 2, logicalResolution.y + 2)
+					'DrawRect(-1, -1, logicalResolution.x + 2, logicalResolution.y + 2)
+					DrawRect(-barras.x - 1, -barras.y - 1, logicalResolution.x + 2 + barras.x * 2, logicalResolution.y + 2 + barras.y * 2)
 					SetColor(255, 255, 255)
 					SetAlpha(1)
 				EndIf
@@ -79,7 +81,8 @@ Class Browser extends App
 
 					SetAlpha(value)
 					SetColor(fadeRed, fadeGreen, fadeBlue)
-					DrawRect(-1, -1, logicalResolution.x + 2, logicalResolution.y + 2)
+					'DrawRect(-1, -1, logicalResolution.x + 2, logicalResolution.y + 2)
+					DrawRect(-barras.x - 1, -barras.y - 1, logicalResolution.x + 2 + barras.x * 2, logicalResolution.y + 2 + barras.y * 2)
 					SetColor(255, 255, 255)
 					SetAlpha(1)
 			
@@ -92,13 +95,14 @@ Class Browser extends App
 						If pauseScreen <> Null Then pauseScreen.Render()
 				End			
 			End
-		SetColor(0, 0, 0)
-		DrawRect(-barras.x, 0, barras.x, logicalResolution.y)
-		DrawRect(logicalResolution.x, 0, barras.x, logicalResolution.y)
-
-		DrawRect(0, -barras.y, logicalResolution.x, barras.y)
-		DrawRect(0, logicalResolution.y, logicalResolution.x, barras.y)
-
+		If drawBars
+			SetColor(0, 0, 0)
+			DrawRect(-barras.x, 0, barras.x, logicalResolution.y)
+			DrawRect(logicalResolution.x, 0, barras.x, logicalResolution.y)
+	
+			DrawRect(0, -barras.y, logicalResolution.x, barras.y)
+			DrawRect(0, logicalResolution.y, logicalResolution.x, barras.y)
+		EndIf
 
 		PopMatrix()
 		'SetColor(255, 255, 255)
@@ -347,28 +351,26 @@ Class Browser extends App
 	'Field hasFaded:Bool = False
 	
 	Field fadingoutScreen:Screen
-	
 	Field fadingStatus:Int = eFadingStatus.NONE
 	Field faderCounter:Int = 0
 	Global barras:= New DrawingPoint'(0, 0)
 	Global scalefactor:Float = 1
 	Global logicalResolution:= New DrawingPointInt(1280, 720)
 	Function CalculateScaleFactor:Float()
-		'Local scalefactor:Float =
-		scalefactor = Float(DeviceWidth()) / logicalResolution.x '* DeviceWidth()
-		
-		If logicalResolution.y * scalefactor > DeviceHeight() Then
-			'Barras verticales
-			scalefactor = Float(DeviceHeight()) / logicalResolution.y
-			Local MaxCoord:Float = DeviceWidth() / scalefactor
-			barras.Set( (MaxCoord - logicalResolution.x) / 2.0, 0)
-			Return scalefactor
-		Else
-			'Barras horizontales
-			Local MaxCoord:Float = DeviceHeight() / scalefactor
-			barras.Set(0, (MaxCoord - logicalResolution.y) / 2.0)
-			Return scalefactor
-		EndIf
+			scalefactor = Float(DeviceWidth()) / logicalResolution.x '* DeviceWidth()
+			
+			If logicalResolution.y * scalefactor > DeviceHeight() Then
+				'Barras verticales
+				scalefactor = Float(DeviceHeight()) / logicalResolution.y
+				Local MaxCoord:Float = DeviceWidth() / scalefactor
+				barras.Set( (MaxCoord - logicalResolution.x) / 2.0, 0)
+				Return scalefactor
+			Else
+				'Barras horizontales
+				Local MaxCoord:Float = DeviceHeight() / scalefactor
+				barras.Set(0, (MaxCoord - logicalResolution.y) / 2.0)
+				Return scalefactor
+			EndIf			
 	End
 	Global scaleFactor:Float = 1
 	
